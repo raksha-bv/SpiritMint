@@ -226,6 +226,11 @@ export default function QuizPage() {
             <h2 className="text-2xl font-semibold text-gray-800 mb-2">
               {`Your Spirit Animal: ${result.name}`}
             </h2>
+            <img
+              src={`https://aqua-rare-worm-454.mypinata.cloud/ipfs/QmWueHr66NxYr31RbRPvFyLMwwk3sJz8GCkJ3hkah4L1od/${result.name.toLowerCase()}.png`}
+              alt={result.name}
+              className="w-32 h-32 mx-auto rounded-full mb-4 shadow-lg"
+            />
             <p className="text-gray-500 mb-6">{result.traits.join(", ")}</p>
 
             {!walletConnected ? (
@@ -264,7 +269,7 @@ export default function QuizPage() {
               {questions[currentQuestion].options.map((option, index) => (
                 <button
                   key={index}
-                  className="w-full bg-indigo-400  text-white py-3 px-6 rounded-lg hover:bg-indigo-500"
+                  className="w-full bg-indigo-400 text-white py-3 px-6 rounded-lg hover:bg-indigo-500"
                   onClick={() => handleAnswer(index)}
                 >
                   {option}
