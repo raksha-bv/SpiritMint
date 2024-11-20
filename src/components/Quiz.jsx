@@ -215,27 +215,29 @@ export default function QuizPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-neutral-100 text-gray-100 p-4">
-      <div className="w-full max-w-md p-6 bg-gray-800 shadow-lg rounded-lg">
-        <h1 className="text-3xl font-bold mb-6 text-center">
+    <div className="h-screen flex flex-col items-center justify-center bg-gradient-to-b from-blue-100 to-white text-gray-800 p-4">
+      <div className="w-full max-w-lg bg-white rounded-lg p-6 shadow-xl">
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
           Discover Your Spirit Animal
         </h1>
 
         {result ? (
           <div className="text-center">
-            <h2 className="text-2xl font-semibold mb-2">{`Your Spirit Animal: ${result.name}`}</h2>
-            <p className="text-gray-400 mb-6">{result.traits.join(", ")}</p>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+              {`Your Spirit Animal: ${result.name}`}
+            </h2>
+            <p className="text-gray-500 mb-6">{result.traits.join(", ")}</p>
 
             {!walletConnected ? (
               <button
-                className="bg-yellow-600 hover:bg-yellow-700 text-white py-2 px-4 rounded"
+                className="bg-indigo-600 hover:bg-indigo-700 text-white py-3 px-6 mx-5 rounded-full text-lg shadow-lg mb-4"
                 onClick={connectWallet}
               >
-                Connect Wallet
+                Connect Metamask
               </button>
             ) : (
               <button
-                className="bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded mt-4"
+                className="bg-green-600 hover:bg-green-700 text-white py-3 px-6 mx-5 rounded-full text-lg shadow-lg mb-4"
                 onClick={() =>
                   mintNft(
                     `https://aqua-rare-worm-454.mypinata.cloud/ipfs/QmVTDFWMJJ6bJW3ajDzxJkh2FDoq9soS1aADoA1aQYkNH8/${result.name.toLowerCase()}.json`
@@ -247,7 +249,7 @@ export default function QuizPage() {
             )}
 
             <button
-              className="bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded mt-4"
+              className="bg-gray-600 hover:bg-gray-700 text-white py-3 px-6 mx-5 rounded-full text-lg shadow-lg mt-4"
               onClick={() => window.location.reload()}
             >
               Retake Quiz
@@ -255,20 +257,19 @@ export default function QuizPage() {
           </div>
         ) : (
           <>
-            <p className="text-lg font-medium mb-4">
-              {questions[currentQuestion]?.text ||
-                "Thank you for completing the quiz!"}
+            <p className="text-lg text-center text-gray-800 mb-4">
+              {questions[currentQuestion].text}
             </p>
-            <div className="space-y-2">
-              {questions[currentQuestion]?.options?.map((option, index) => (
+            <div className="space-y-4">
+              {questions[currentQuestion].options.map((option, index) => (
                 <button
                   key={index}
+                  className="w-full bg-indigo-400  text-white py-3 px-6 rounded-lg hover:bg-indigo-500"
                   onClick={() => handleAnswer(index)}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded"
                 >
                   {option}
                 </button>
-              )) || null}
+              ))}
             </div>
           </>
         )}
