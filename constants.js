@@ -1,4 +1,4 @@
-export const contractAddress = "0x5CFFf10df6B48703140428FFa8cbC7485f20399C";
+export const contractAddress = "0x45719A6fb26596b9Cd2DC953d02DFeEf9238466D";
 export const abi = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   {
@@ -129,6 +129,20 @@ export const abi = [
     inputs: [{ internalType: "uint256", name: "tokenId", type: "uint256" }],
     name: "getApproved",
     outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getTokenCounter",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [{ internalType: "address", name: "account", type: "address" }],
+    name: "hasMinted",
+    outputs: [{ internalType: "bool", name: "", type: "bool" }],
     stateMutability: "view",
     type: "function",
   },
