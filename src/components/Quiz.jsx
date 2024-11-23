@@ -6,112 +6,127 @@ const questions = [
   {
     text: "How do you handle challenges?",
     options: [
-      "Face them head-on",
-      "Look for a creative solution",
-      "Seek guidance from others",
-      "Take time to think and act cautiously",
+      "Face them head-on", // Bear, Lion
+      "Look for a creative solution", // Fox, Owl
+      "Seek guidance from others", // Wolf, Deer
+      "Take time to think and act cautiously", // Deer, Owl
     ],
   },
   {
     text: "Which environment are you most drawn to?",
-    options: ["Deep forests", "Open skies", "Mountains", "Oceans"],
+    options: [
+      "Deep forests", // Bear, Deer, Fox
+      "Open skies", // Eagle, Owl
+      "Mountains", // Lion, Tiger
+      "Oceans", // Dolphin, Whale
+    ],
   },
   {
     text: "How would friends describe you?",
     options: [
-      "Protective and caring",
-      "Thoughtful and wise",
-      "Bold and confident",
-      "Gentle and calm",
+      "Protective and caring", // Bear, Wolf
+      "Thoughtful and wise", // Owl, Deer
+      "Bold and confident", // Lion, Tiger
+      "Gentle and calm", // Deer, Dolphin
     ],
   },
   {
     text: "When working on a task, you prefer to...",
     options: [
-      "Work alone",
-      "Collaborate with others",
-      "Adapt as needed",
-      "Stick to a structured plan",
+      "Work alone", // Bear, Tiger
+      "Collaborate with others", // Dolphin, Wolf
+      "Adapt as needed", // Fox, Owl
+      "Stick to a structured plan", // Eagle, Lion
     ],
   },
   {
     text: "What role do you take in a group setting?",
-    options: ["Leader", "Planner", "Helper", "Observer"],
+    options: [
+      "Leader", // Lion, Eagle
+      "Planner", // Owl, Fox
+      "Helper", // Deer, Dolphin
+      "Observer", // Wolf, Owl
+    ],
   },
   {
     text: "How do you recharge?",
     options: [
-      "Spending time in nature",
-      "Meditating or journaling",
-      "Being with friends",
-      "Exploring new things",
+      "Spending time in nature", // Bear, Deer
+      "Meditating or journaling", // Owl, Deer
+      "Being with friends", // Dolphin, Wolf
+      "Exploring new things", // Fox, Tiger
     ],
   },
   {
     text: "Which of these values resonates with you the most?",
-    options: ["Loyalty", "Freedom", "Compassion", "Resilience"],
+    options: [
+      "Loyalty", // Wolf, Lion
+      "Freedom", // Eagle, Tiger
+      "Compassion", // Dolphin, Deer
+      "Resilience", // Bear, Lion
+    ],
   },
   {
     text: "How do you approach new experiences?",
     options: [
-      "With caution",
-      "With excitement",
-      "With curiosity",
-      "With confidence",
+      "With caution", // Deer, Owl
+      "With excitement", // Dolphin, Fox
+      "With curiosity", // Fox, Eagle
+      "With confidence", // Lion, Tiger
     ],
   },
   {
     text: "What motivates you the most?",
     options: [
-      "Achieving personal goals",
-      "Creative growth and transformation",
-      "Helping others and making a difference",
-      "Joy and connection with others",
+      "Achieving personal goals", // Tiger, Lion
+      "Creative growth and transformation", // Butterfly, Fox
+      "Helping others and making a difference", // Dolphin, Wolf
+      "Joy and connection with others", // Dolphin, Wolf
     ],
   },
   {
     text: "How do you prefer to solve problems?",
     options: [
-      "Approach it head-on with strength",
-      "Think outside the box",
-      "Collaborate with others",
-      "Plan a careful, calculated strategy",
+      "Approach it head-on with strength", // Bear, Lion
+      "Think outside the box", // Fox, Owl
+      "Collaborate with others", // Dolphin, Wolf
+      "Plan a careful, calculated strategy", // Eagle, Tiger
     ],
   },
   {
     text: "What do you value most in a friendship?",
     options: [
-      "Loyalty and trust",
-      "Creativity and growth",
-      "Compassion and support",
-      "Fun and adventures",
+      "Loyalty and trust", // Wolf, Lion
+      "Creativity and growth", // Fox, Butterfly
+      "Compassion and support", // Dolphin, Deer
+      "Fun and adventures", // Dolphin, Tiger
     ],
   },
   {
     text: "How do you respond to change?",
     options: [
-      "Adapt and find the best way to handle it",
-      "Embrace it as an opportunity for transformation",
-      "Take it slow and think it through",
-      "Go with the flow and make the best of it",
+      "Adapt and find the best way to handle it", // Fox, Deer
+      "Embrace it as an opportunity for transformation", // Butterfly, Owl
+      "Take it slow and think it through", // Deer, Lion
+      "Go with the flow and make the best of it", // Dolphin, Tiger
     ],
   },
   {
     text: "What is your idea of a perfect day?",
     options: [
-      "A peaceful day in nature",
-      "A day filled with creative pursuits",
-      "A relaxing day with close family and friends",
-      "A fun day at the beach with friends",
+      "A peaceful day in nature", // Bear, Deer
+      "A day filled with creative pursuits", // Fox, Owl
+      "A relaxing day with close family and friends", // Dolphin, Wolf
+      "A fun day at the beach with friends", // Dolphin, Tiger
     ],
   },
   {
     text: "What is most important to you in life?",
     options: [
-      "Strength, stability, and solitude",
-      "Growth, creativity, and transformation",
-      "Peace, harmony, and compassion",
-      "Fun, social connections, and joy",
+      "Strength, stability, and solitude", // Bear, Tiger
+      "Growth, creativity, and transformation", // Butterfly, Fox
+      "Peace, harmony, and compassion", // Dolphin, Deer
+      "Fun, social connections, and joy", // Dolphin, Lion
     ],
   },
 ];
@@ -202,16 +217,33 @@ export default function QuizPage() {
   };
 
   const calculateResult = () => {
-    const scoreMap = userAnswers.reduce((map, answer) => {
-      map[answer] = (map[answer] || 0) + 1;
-      return map;
+    const scores = spiritAnimals.reduce((acc, animal) => {
+      acc[animal.name] = 0;
+      return acc;
     }, {});
 
-    const highestScoreIndex = Object.keys(scoreMap).reduce((a, b) =>
-      scoreMap[a] > scoreMap[b] ? a : b
+    userAnswers.forEach((answerIndex, questionIndex) => {
+      const question = questions[questionIndex];
+      const selectedOption = question.options[answerIndex];
+
+      spiritAnimals.forEach((animal) => {
+        if (animal.traits.includes(selectedOption)) {
+          scores[animal.name] += 1;
+        }
+      });
+    });
+
+    const maxScore = Math.max(...Object.values(scores));
+    const highestScoringAnimals = Object.keys(scores).filter(
+      (animal) => scores[animal] === maxScore
     );
 
-    setResult(spiritAnimals[highestScoreIndex]);
+    const randomAnimal =
+      highestScoringAnimals[
+        Math.floor(Math.random() * highestScoringAnimals.length)
+      ];
+
+    setResult(spiritAnimals.find((animal) => animal.name === randomAnimal));
   };
 
   return (
