@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ethers } from "../../ethers-6.7.esm.min.js";
 import { contractAddress, abi } from "../../constants";
+import confetti from "canvas-confetti";
 
 const questions = [
   {
@@ -149,6 +150,13 @@ export default function QuizPage() {
   const [userAnswers, setUserAnswers] = useState([]);
   const [result, setResult] = useState(null);
   const [walletConnected, setWalletConnected] = useState(false);
+  const triggerConfetti = () => {
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+    });
+  };
 
   const connectWallet = async () => {
     if (typeof window.ethereum !== "undefined") {
@@ -244,6 +252,9 @@ export default function QuizPage() {
       ];
 
     setResult(spiritAnimals.find((animal) => animal.name === randomAnimal));
+
+    // Trigger confetti when the result is displayed
+    triggerConfetti();
   };
 
   return (
